@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heizungsberater | Neue Heizung GmbH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #1f4b99;
+      --primary-dark: #163566;
+      --accent: #f28b30;
+      --bg: #f6f8fb;
+      --text: #1e1f24;
+      --muted: #5a5d68;
+      --card: #ffffff;
+      --border: #d9dce5;
+      --shadow: 0 14px 45px rgba(16, 36, 94, 0.12);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    header, main {
+      width: min(1100px, 95vw);
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 4rem 0 3rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin: 0 0 1rem;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .hero-text p {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.4rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(31, 75, 153, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(31, 75, 153, 0.35);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 0.9rem;
+      background: rgba(242, 139, 48, 0.12);
+      color: #c05d08;
+      border-radius: 999px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .wizard {
+      margin: 1.5rem 0 3rem;
+    }
+
+    .wizard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .progress {
+      width: 100%;
+      height: 10px;
+      background: #e6eaf3;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.3s ease;
+    }
+
+    .step-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--primary-dark);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0 1.25rem;
+    }
+
+    .option-card {
+      position: relative;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      cursor: pointer;
+      transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .option-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 12px 30px rgba(31, 75, 153, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .option-card.selected {
+      border-color: var(--primary);
+      box-shadow: 0 16px 40px rgba(31, 75, 153, 0.25);
+    }
+
+    .option-card strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .option-card span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .wizard-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.85rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(31, 75, 153, 0.25);
+    }
+
+    .btn-secondary {
+      background: #eef2f8;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none;
+    }
+
+    .wizard-footer {
+      text-align: right;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .results {
+      margin: 2rem 0 3rem;
+    }
+
+    .results h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.7rem;
+      color: var(--primary-dark);
+    }
+
+    .results p.lead {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+    }
+
+    .recommendations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .recommendation-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: 0 14px 40px rgba(22, 53, 102, 0.12);
+    }
+
+    .recommendation-card h3 {
+      margin: 0 0 0.35rem;
+      color: var(--primary-dark);
+      font-size: 1.15rem;
+    }
+
+    .recommendation-card p {
+      margin: 0 0 0.75rem;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.35rem 0.6rem;
+      background: rgba(31, 75, 153, 0.12);
+      color: var(--primary-dark);
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .benefits {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.75rem;
+    }
+
+    .benefits li {
+      padding-left: 1.4rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .benefits li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .recommendation-card .btn-primary {
+      width: 100%;
+      text-align: center;
+      margin-top: 0.35rem;
+    }
+
+    .notice {
+      background: rgba(242, 139, 48, 0.12);
+      border: 1px solid rgba(242, 139, 48, 0.5);
+      padding: 1rem;
+      border-radius: var(--radius);
+      color: #9a4b05;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      .wizard-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-text">
+      <div class="hero-badge">Neue Heizung GmbH · Heizungsberater</div>
+      <h1>Finden Sie Ihre perfekte Heizlösung</h1>
+      <p>Mit wenigen Antworten erhalten Sie eine maßgeschneiderte Empfehlung für effiziente, förderfähige Heizsysteme – von modernen Luft/Wasser-Wärmepumpen über Pellet- und Scheitholzkessel bis zu Kombilösungen.</p>
+      <a class="hero-cta" href="#fragebogen">Jetzt starten →</a>
+    </div>
+    <div class="panel">
+      <h3 style="margin-top:0;color:var(--primary-dark)">Warum ein kurzer Check?</h3>
+      <ul class="benefits" style="margin-bottom:0;">
+        <li>Erkennen Sie das passende System für Ihre Gebäudestruktur und Wünsche.</li>
+        <li>Nutzen Sie Förderchancen und sparen Sie langfristig Energiekosten.</li>
+        <li>Profitieren Sie von Zukunftssicherheit durch erneuerbare Technologien.</li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section id="fragebogen" class="wizard panel" aria-live="polite">
+      <div class="wizard-header">
+        <div>
+          <p class="step-title" id="stepLabel">Schritt 1 von 6</p>
+          <div class="progress" aria-hidden="true">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+        <div class="wizard-footer">Beantworten Sie die Fragen Schritt für Schritt.</div>
+      </div>
+
+      <div id="questionContainer"></div>
+
+      <div class="wizard-actions">
+        <button class="btn btn-secondary" id="prevBtn" type="button">← Zurück</button>
+        <button class="btn btn-primary" id="nextBtn" type="button">Weiter</button>
+      </div>
+    </section>
+
+    <section class="results panel" id="results" style="display:none;">
+      <h2>Ihre passende Heizlösung</h2>
+      <p class="lead">Basierend auf Ihren Angaben empfehlen wir folgende Systeme:</p>
+      <div class="recommendations" id="recommendations"></div>
+      <div class="notice">Hinweis: Die Empfehlung bietet eine erste Orientierung. Eine individuelle Fachberatung durch die Neue Heizung GmbH stellt sicher, dass hydraulischer Abgleich, Förderfähigkeit und Aufstellbedingungen optimal berücksichtigt werden.</div>
+    </section>
+  </main>
+
+  <script>
+    // Produktdatenbank
+    const products = [
+      { id: 'mia8', titel: 'NMT MIA 8 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '8 kW', besondereEigenschaften: ['Sehr effizient für gut gedämmte Einfamilienhäuser', 'Inklusive Warmwasserspeicher und Trennspeicher', 'Leiser Betrieb, ideal für Wohngebiete'] },
+      { id: 'mia13', titel: 'NMT MIA 13 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '13 kW', besondereEigenschaften: ['Für größere Einfamilien- und Zweifamilienhäuser', 'Hohe Jahresarbeitszahl durch Inverter-Technologie', 'Inklusive Warmwasserspeicher'] },
+      { id: 'mia18', titel: 'NMT MIA 18 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '18 kW', besondereEigenschaften: ['Für Mehrfamilienhäuser oder Gewerbe mit gutem Dämmstandard', 'Stabile Leistung auch bei niedrigen Außentemperaturen', 'Förderfähig und zukunftssicher'] },
+      { id: 'mia23', titel: 'NMT MIA 23 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '23 kW', besondereEigenschaften: ['Für große Gebäude oder Gewerbeeinheiten', 'Hohe Effizienz, vorbereitet für Lastmanagement', 'Inklusive Warmwasserspeicher'] },
+      { id: 'twwp200', titel: 'Trinkwasser-Wärmepumpe 200 Liter mit Wärmetauscher', kategorie: 'trinkwasser', leistung: '200 L', besondereEigenschaften: ['Effiziente Warmwasserbereitung', 'Ideal als Ergänzung zur Hauptheizung', 'Einfache Installation'] },
+      { id: 'twwp270', titel: 'Trinkwasser-Wärmepumpe 270 Liter mit Wärmetauscher', kategorie: 'trinkwasser', leistung: '270 L', besondereEigenschaften: ['Für höheren Warmwasserbedarf', 'Nutzen von Umgebungsluftwärme', 'Geringe Betriebskosten'] },
+      { id: 'pkp15', titel: 'Pelletkessel PKP Smart 15 – vollautomatischer Pelletkessel', kategorie: 'pellets', leistung: '15 kW', besondereEigenschaften: ['Automatische Beschickung', 'Effizient und komfortabel', 'Ideal für Einfamilienhäuser'] },
+      { id: 'pkpCompact', titel: 'Pelletkessel PKP-Kompakt 15–30 kW', kategorie: 'pellets', leistung: '15–30 kW', besondereEigenschaften: ['Flexible Leistungsbereiche', 'Für mittlere bis größere Gebäude', 'Automatisches Saugsystem möglich'] },
+      { id: 'hvg2', titel: 'Scheitholzkessel HVG II 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', besondereEigenschaften: ['Für Nutzer mit eigenem Holzvorrat', 'Hohe Wirkungsgrade', 'Robuste Konstruktion'] },
+      { id: 'hvg3', titel: 'Scheitholzkessel HVG III 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', besondereEigenschaften: ['Optimierte Verbrennung', 'Für mittelgroße Gebäude', 'Solider Dauerbetrieb'] },
+      { id: 'hvg4', titel: 'Scheitholzkessel HVG IV 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', besondereEigenschaften: ['Hohe Effizienz und Komfort', 'Optional mit Pufferspeicher kombinierbar', 'Ideal für größere Heizräume'] },
+      { id: 'hvgp4', titel: 'Kombikessel HVGP IV 15/30 (Scheitholz + Pellets)', kategorie: 'kombi', leistung: '15–30 kW', besondereEigenschaften: ['Flexibilität zwischen Pellets und Scheitholz', 'Hohe Unabhängigkeit von Brennstoffpreisen', 'Automatischer Pelletbetrieb'] },
+      { id: 'hvgp', titel: 'Kombikessel HVG P15/P30 (Scheitholz + Pellets)', kategorie: 'kombi', leistung: '15–30 kW', besondereEigenschaften: ['Für Nutzer, die zwischen Holz und Pellets wechseln möchten', 'Hohe Effizienz', 'Passt zu Gebäuden mit großem Wärmebedarf'] },
+      { id: 'puffer', titel: 'Pufferspeicher HPS / HP 800–1000', kategorie: 'speicher', leistung: '800–1000 L', besondereEigenschaften: ['Optimiert den Betrieb von Kesseln und Wärmepumpen', 'Kann mit Solarwärmetauscher ausgestattet werden', 'Sorgt für gleichmäßige Wärmeabgabe'] },
+      { id: 'hygiene', titel: 'Hygienepufferspeicher PHS / PH 800–1000', kategorie: 'speicher', leistung: '800–1000 L', besondereEigenschaften: ['Frischwassertechnik für hygienische Warmwasserbereitung', 'Gute Ergänzung für Biomasse- und Kombikessel', 'Erhöht den Komfort'] },
+      { id: 'saugsystem', titel: 'Kesselsaugsystem & 600-Liter-Standsilo', kategorie: 'zubehoer', leistung: '600 L', besondereEigenschaften: ['Komfortable Pelletlagerung', 'Automatisierte Förderung', 'Platzsparendes Silokonzept'] }
+    ];
+
+    // Fragenkonfiguration
+    const steps = [
+      {
+        id: 'gebaeude',
+        titel: 'Gebäudetyp',
+        text: 'Für welches Objekt suchen Sie eine Heizlösung?',
+        options: [
+          { value: 'einfamilienhaus', label: 'Einfamilienhaus', hint: 'Klassisches Ein-/Zweifamilienhaus' },
+          { value: 'mehrfamilienhaus', label: 'Mehrfamilienhaus', hint: '2+ Parteien' },
+          { value: 'gewerbe', label: 'Gewerbe', hint: 'Gewerbeeinheit oder Mischobjekt' }
+        ]
+      },
+      {
+        id: 'baujahr',
+        titel: 'Baujahr / Dämmstandard',
+        text: 'Wie ist der energetische Zustand?',
+        options: [
+          { value: 'unsaniert', label: 'Vor 1990, unsaniert', hint: 'Höherer Wärmebedarf' },
+          { value: 'teilsaniert', label: '1990–2005, teilsaniert', hint: 'Mittlerer Bedarf' },
+          { value: 'modern', label: 'Nach 2005, gut gedämmt', hint: 'Niedriger Bedarf' }
+        ]
+      },
+      {
+        id: 'flaeche',
+        titel: 'Wohn- / Nutzfläche',
+        text: 'Wie groß ist die Fläche?',
+        options: [
+          { value: 'bis150', label: 'Bis 150 m²', hint: 'Kompakte Gebäude' },
+          { value: '150-250', label: '150–250 m²', hint: 'Größere Wohnfläche' },
+          { value: 'ueber250', label: 'Über 250 m²', hint: 'Mehrfamilienhaus/Gewerbe' }
+        ]
+      },
+      {
+        id: 'altanlage',
+        titel: 'Bisherige Heizung',
+        text: 'Was wird aktuell genutzt?',
+        options: [
+          { value: 'oel', label: 'Öl', hint: 'Heizölkessel' },
+          { value: 'gas', label: 'Gas', hint: 'Gaskessel / Therme' },
+          { value: 'strom', label: 'Nachtspeicher / Elektro', hint: 'Hohe Betriebskosten' },
+          { value: 'holz', label: 'Holz', hint: 'Scheitholzofen/Kessel' },
+          { value: 'pellets', label: 'Pellets', hint: 'Pelletheizung' },
+          { value: 'keine', label: 'Noch keine Heizung', hint: 'Neubau / Umbau' }
+        ]
+      },
+      {
+        id: 'praeferenz',
+        titel: 'Bevorzugte Energiequelle',
+        text: 'Wohin soll die Reise gehen?',
+        options: [
+          { value: 'waermepumpe', label: 'Wärmepumpe', hint: 'Max. Unabhängigkeit von fossilen Brennstoffen' },
+          { value: 'scheitholz', label: 'Holz / Scheitholz', hint: 'Nutzung eigener Holzvorräte' },
+          { value: 'pellets', label: 'Pellets', hint: 'Automatisiert und komfortabel' },
+          { value: 'kombi', label: 'Kombination Holz + Pellets', hint: 'Höchste Flexibilität' },
+          { value: 'offen', label: 'Noch unentschlossen', hint: 'Lassen Sie sich inspirieren' }
+        ]
+      },
+      {
+        id: 'warmwasser',
+        titel: 'Warmwasser',
+        text: 'Wie soll Warmwasser bereitet werden?',
+        options: [
+          { value: 'heizung', label: 'Über die Heizungsanlage', hint: 'Warmwasser am Heizsystem mitdenken' },
+          { value: 'separat', label: 'Separat / vorhanden', hint: 'Bestehende Lösung bleibt' }
+        ]
+      },
+      {
+        id: 'prioritaet',
+        titel: 'Ihre Priorität',
+        text: 'Was ist Ihnen am wichtigsten?',
+        options: [
+          { value: 'kosten', label: 'Niedrigste laufende Kosten', hint: 'Effizienz & Verbrauch' },
+          { value: 'unabhaengigkeit', label: 'Maximale Unabhängigkeit von Fossilen', hint: 'Erneuerbare Energien' },
+          { value: 'invest', label: 'Geringe Investitionskosten', hint: 'Budgetfreundliche Lösung' }
+        ]
+      }
+    ];
+
+    let currentStep = 0;
+    const answers = {};
+
+    const questionContainer = document.getElementById('questionContainer');
+    const stepLabel = document.getElementById('stepLabel');
+    const progressBar = document.getElementById('progressBar');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const resultsSection = document.getElementById('results');
+    const recommendationsWrapper = document.getElementById('recommendations');
+
+    // Render question cards
+    function renderStep(index) {
+      const step = steps[index];
+      stepLabel.textContent = `Schritt ${index + 1} von ${steps.length}`;
+      progressBar.style.width = `${((index + 1) / steps.length) * 100}%`;
+      prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+      nextBtn.textContent = index === steps.length - 1 ? 'Ergebnis anzeigen' : 'Weiter';
+
+      const selected = answers[step.id];
+      const optionsHtml = step.options
+        .map(
+          (opt) => `
+            <div class="option-card ${selected === opt.value ? 'selected' : ''}" data-value="${opt.value}" role="button" aria-pressed="${selected === opt.value}">
+              <strong>${opt.label}</strong>
+              <span>${opt.hint}</span>
+            </div>
+          `
+        )
+        .join('');
+
+      questionContainer.innerHTML = `
+        <div class="question">
+          <h3 class="step-title" style="margin-bottom:0.35rem;">${step.titel}</h3>
+          <p style="margin-top:0;color:var(--muted)">${step.text}</p>
+          <div class="options" id="options">${optionsHtml}</div>
+        </div>
+      `;
+
+      document.querySelectorAll('.option-card').forEach((card) => {
+        card.addEventListener('click', () => {
+          document.querySelectorAll('.option-card').forEach((c) => c.classList.remove('selected'));
+          card.classList.add('selected');
+          answers[step.id] = card.dataset.value;
+        });
+      });
+    }
+
+    // Bewertungslogik
+    function scoreProducts() {
+      const scores = products.reduce((acc, p) => ({ ...acc, [p.id]: 0 }), {});
+
+      const { gebaeude, baujahr, flaeche, altanlage, praeferenz, warmwasser, prioritaet } = answers;
+
+      // Grundpräferenzen
+      if (praeferenz === 'waermepumpe') {
+        boostCategory('waermepumpe', 25);
+        if (baujahr === 'modern') boostCategory('waermepumpe', 8);
+        if (baujahr === 'teilsaniert') boostCategory('waermepumpe', 4);
+      }
+
+      if (praeferenz === 'scheitholz') boostCategory('scheitholz', 18);
+      if (praeferenz === 'pellets') boostCategory('pellets', 18);
+      if (praeferenz === 'kombi') boostCategory('kombi', 20);
+      if (praeferenz === 'offen') {
+        boostCategory('waermepumpe', 8);
+        boostCategory('pellets', 6);
+        boostCategory('kombi', 6);
+      }
+
+      // Gebäudefläche und Leistung
+      if (flaeche === 'bis150') {
+        addScore(['mia8', 'mia13', 'pkp15'], 6);
+      } else if (flaeche === '150-250') {
+        addScore(['mia13', 'mia18', 'pkpCompact', 'hvg2', 'hvg3', 'hvg4', 'hvgp4', 'hvgp'], 8);
+      } else if (flaeche === 'ueber250') {
+        addScore(['mia18', 'mia23', 'pkpCompact', 'hvg4', 'hvgp4', 'hvgp'], 10);
+      }
+
+      // Dämmstandard
+      if (baujahr === 'unsaniert') {
+        boostCategory('pellets', 6);
+        boostCategory('scheitholz', 6);
+        boostCategory('kombi', 6);
+      }
+
+      // Altanlage
+      if (altanlage === 'oel' || altanlage === 'gas') {
+        boostCategory('waermepumpe', 6);
+        boostCategory('pellets', 4);
+      }
+      if (altanlage === 'strom') boostCategory('waermepumpe', 10);
+      if (altanlage === 'holz') boostCategory('scheitholz', 6);
+      if (altanlage === 'pellets') boostCategory('pellets', 6);
+
+      // Prioritäten
+      if (prioritaet === 'kosten') {
+        boostCategory('waermepumpe', 6);
+        boostCategory('pellets', 4);
+      } else if (prioritaet === 'unabhaengigkeit') {
+        boostCategory('waermepumpe', 6);
+        boostCategory('scheitholz', 6);
+        boostCategory('kombi', 6);
+      } else if (prioritaet === 'invest') {
+        boostCategory('pellets', 3);
+        boostCategory('scheitholz', 3);
+      }
+
+      // Warmwasserbedarf
+      if (warmwasser === 'heizung') {
+        boostCategory('waermepumpe', 2);
+        boostCategory('trinkwasser', 10);
+        boostCategory('speicher', 4);
+      }
+
+      // Gebäudetyp
+      if (gebaeude === 'gewerbe' || gebaeude === 'mehrfamilienhaus') {
+        addScore(['mia18', 'mia23', 'pkpCompact', 'hvg4', 'hvgp4', 'hvgp'], 4);
+      }
+
+      function boostCategory(category, value) {
+        products
+          .filter((p) => p.kategorie === category)
+          .forEach((p) => {
+            scores[p.id] += value;
+          });
+      }
+
+      function addScore(ids, value) {
+        ids.forEach((id) => {
+          if (scores[id] !== undefined) scores[id] += value;
+        });
+      }
+
+      return scores;
+    }
+
+    function generateRecommendations() {
+      const scores = scoreProducts();
+      const sorted = [...products]
+        .map((p) => ({ ...p, score: scores[p.id] || 0 }))
+        .sort((a, b) => b.score - a.score)
+        .filter((p) => p.score > 0);
+
+      const top = sorted.slice(0, 3);
+
+      recommendationsWrapper.innerHTML = top
+        .map((product) => {
+          const reasons = buildReasons(product);
+          return `
+            <article class="recommendation-card">
+              <div class="tag">${product.kategorie.toUpperCase()}</div>
+              <h3>${product.titel}</h3>
+              <p>${reasons.description}</p>
+              <ul class="benefits">${reasons.benefits.map((b) => `<li>${b}</li>`).join('')}</ul>
+              <button class="btn btn-primary" type="button" aria-label="Zum Produkt ${product.titel}">Zum Produkt</button>
+            </article>
+          `;
+        })
+        .join('');
+
+      if (top.length === 0) {
+        recommendationsWrapper.innerHTML = '<p>Bitte passen Sie Ihre Antworten an – wir haben noch keine passende Empfehlung gefunden.</p>';
+      } else {
+        const needsStorage = top.some((p) => ['pellets', 'scheitholz', 'kombi'].includes(p.kategorie));
+        if (needsStorage) {
+          recommendationsWrapper.innerHTML += `
+            <article class="recommendation-card" style="border-style:dashed;">
+              <div class="tag">ERGÄNZUNG</div>
+              <h3>Passende Speicher- und Fördersysteme</h3>
+              <p>Für optimale Laufzeiten empfehlen wir einen Pufferspeicher oder ein Pellet-Saugsystem.</p>
+              <ul class="benefits">
+                <li>Pufferspeicher HPS/HP 800–1000 für gleichmäßige Wärmeabgabe</li>
+                <li>Hygienepufferspeicher PHS/PH 800–1000 für frisches Warmwasser</li>
+                <li>Kesselsaugsystem & 600-Liter-Standsilo für automatisierte Pelletförderung</li>
+              </ul>
+              <button class="btn btn-primary" type="button">Zum Zubehör</button>
+            </article>
+          `;
+        }
+      }
+    }
+
+    function buildReasons(product) {
+      const { baujahr, flaeche, praeferenz, warmwasser, prioritaet } = answers;
+      const benefits = [...product.besondereEigenschaften];
+      const descriptionParts = [];
+
+      if (product.kategorie === 'waermepumpe') {
+        if (baujahr === 'modern') descriptionParts.push('Ideal für gut gedämmte Gebäude mit niedriger Vorlauftemperatur.');
+        if (prioritaet === 'kosten') descriptionParts.push('Sehr niedrige Betriebskosten durch hohe Effizienz.');
+        if (warmwasser === 'heizung') descriptionParts.push('Inklusive Warmwasserbereitung für maximalen Komfort.');
+      }
+
+      if (product.kategorie === 'pellets') {
+        descriptionParts.push('Komfortabler, automatischer Pelletbetrieb mit stabilen Wärmekosten.');
+        if (prioritaet === 'invest') descriptionParts.push('Attraktives Preis-Leistungs-Verhältnis im Vergleich zu Öl/Gas-Erneuerungen.');
+      }
+
+      if (product.kategorie === 'scheitholz') {
+        descriptionParts.push('Nutzt Scheitholz effizient – ideal bei eigenem Holzvorrat.');
+        if (flaeche === 'ueber250') descriptionParts.push('Leistungsstark genug für großen Wärmebedarf.');
+      }
+
+      if (product.kategorie === 'kombi') {
+        descriptionParts.push('Maximale Flexibilität: Wechsel zwischen Scheitholz und Pellets.');
+        if (prioritaet === 'unabhaengigkeit') descriptionParts.push('Hohe Unabhängigkeit von Energiepreisen.');
+      }
+
+      if (product.kategorie === 'trinkwasser') {
+        descriptionParts.push('Perfekte Ergänzung, wenn Warmwasser mit abgedeckt werden soll.');
+        benefits.push('Separates Warmwasser ohne zusätzliche Kesselbelastung');
+      }
+
+      if (descriptionParts.length === 0) {
+        descriptionParts.push('Sehr gute Passung zu Ihren Angaben und Prioritäten.');
+      }
+
+      return {
+        description: descriptionParts.join(' '),
+        benefits: benefits.slice(0, 5)
+      };
+    }
+
+    function validateStep() {
+      const step = steps[currentStep];
+      return Boolean(answers[step.id]);
+    }
+
+    function showResults() {
+      resultsSection.style.display = 'block';
+      generateRecommendations();
+      resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentStep > 0) {
+        currentStep -= 1;
+        renderStep(currentStep);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (!validateStep()) {
+        alert('Bitte wählen Sie eine Option, um fortzufahren.');
+        return;
+      }
+      if (currentStep < steps.length - 1) {
+        currentStep += 1;
+        renderStep(currentStep);
+      } else {
+        showResults();
+      }
+    });
+
+    // Initial render
+    renderStep(currentStep);
+  </script>
+</body>
+</html>
