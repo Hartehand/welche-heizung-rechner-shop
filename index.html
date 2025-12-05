@@ -31,13 +31,13 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      font-size: 16.5px;
+      font-size: 17.25px;
     }
 
     a { color: inherit; }
 
     header, main {
-      width: min(1200px, 97vw);
+      width: min(1260px, 98vw);
       margin: 0 auto;
     }
 
@@ -99,7 +99,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: clamp(1.75rem, 3vw, 2.35rem);
+      padding: clamp(2rem, 3.2vw, 2.7rem);
     }
 
     .wizard {
@@ -139,14 +139,14 @@
 
     .options {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.1rem;
-      margin: 1.2rem 0 1.35rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.15rem;
+      margin: 1.3rem 0 1.45rem;
     }
 
     .option-card {
       position: relative;
-      padding: 1.05rem 1.1rem;
+      padding: 1.2rem 1.25rem;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background: #fff;
@@ -475,22 +475,22 @@
   <script>
     // Produktdatenbank
     const products = [
-      { id: 'mia8', titel: 'NMT MIA 8 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '8 kW', url: '/produkte/mia-8', besondereEigenschaften: ['Sehr effizient für gut gedämmte Einfamilienhäuser', 'Inklusive Warmwasserspeicher und Trennspeicher', 'Leiser Betrieb, ideal für Wohngebiete'] },
-      { id: 'mia13', titel: 'NMT MIA 13 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '13 kW', url: '/produkte/mia-13', besondereEigenschaften: ['Für größere Einfamilien- und Zweifamilienhäuser', 'Hohe Jahresarbeitszahl durch Inverter-Technologie', 'Inklusive Warmwasserspeicher'] },
-      { id: 'mia18', titel: 'NMT MIA 18 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '18 kW', url: '/produkte/mia-18', besondereEigenschaften: ['Für Mehrfamilienhäuser oder Gewerbe mit gutem Dämmstandard', 'Stabile Leistung auch bei niedrigen Außentemperaturen', 'Förderfähig und zukunftssicher'] },
-      { id: 'mia23', titel: 'NMT MIA 23 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '23 kW', url: '/produkte/mia-23', besondereEigenschaften: ['Für große Gebäude oder Gewerbeeinheiten', 'Hohe Effizienz, vorbereitet für Lastmanagement', 'Inklusive Warmwasserspeicher'] },
-      { id: 'twwp200', titel: 'Trinkwasser-Wärmepumpe 200 Liter mit Wärmetauscher', kategorie: 'trinkwasser', leistung: '200 L', url: '/produkte/trinkwasser-waermepumpe-200', besondereEigenschaften: ['Effiziente Warmwasserbereitung', 'Ideal als Ergänzung zur Hauptheizung', 'Einfache Installation'] },
-      { id: 'twwp270', titel: 'Trinkwasser-Wärmepumpe 270 Liter mit Wärmetauscher', kategorie: 'trinkwasser', leistung: '270 L', url: '/produkte/trinkwasser-waermepumpe-270', besondereEigenschaften: ['Für höheren Warmwasserbedarf', 'Nutzen von Umgebungsluftwärme', 'Geringe Betriebskosten'] },
-      { id: 'pkp15', titel: 'Pelletkessel PKP Smart 15 – vollautomatischer Pelletkessel', kategorie: 'pellets', leistung: '15 kW', url: '/produkte/pkp-smart-15', besondereEigenschaften: ['Automatische Beschickung', 'Effizient und komfortabel', 'Ideal für Einfamilienhäuser'] },
-      { id: 'pkpCompact', titel: 'Pelletkessel PKP-Kompakt 15–30 kW', kategorie: 'pellets', leistung: '15–30 kW', url: '/produkte/pkp-kompakt', besondereEigenschaften: ['Flexible Leistungsbereiche', 'Für mittlere bis größere Gebäude', 'Automatisches Saugsystem möglich'] },
-      { id: 'hvg2', titel: 'Scheitholzkessel HVG II 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', url: '/produkte/hvg-ii', besondereEigenschaften: ['Für Nutzer mit eigenem Holzvorrat', 'Hohe Wirkungsgrade', 'Robuste Konstruktion'] },
-      { id: 'hvg3', titel: 'Scheitholzkessel HVG III 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', url: '/produkte/hvg-iii', besondereEigenschaften: ['Optimierte Verbrennung', 'Für mittelgroße Gebäude', 'Solider Dauerbetrieb'] },
-      { id: 'hvg4', titel: 'Scheitholzkessel HVG IV 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', url: '/produkte/hvg-iv', besondereEigenschaften: ['Hohe Effizienz und Komfort', 'Optional mit Pufferspeicher kombinierbar', 'Ideal für größere Heizräume'] },
-      { id: 'hvgp4', titel: 'Kombikessel HVGP IV 15/30 (Scheitholz + Pellets)', kategorie: 'kombi', leistung: '15–30 kW', url: '/produkte/hvgp-iv', besondereEigenschaften: ['Flexibilität zwischen Pellets und Scheitholz', 'Hohe Unabhängigkeit von Brennstoffpreisen', 'Automatischer Pelletbetrieb'] },
-      { id: 'hvgp', titel: 'Kombikessel HVG P15/P30 (Scheitholz + Pellets)', kategorie: 'kombi', leistung: '15–30 kW', url: '/produkte/hvg-p', besondereEigenschaften: ['Für Nutzer, die zwischen Holz und Pellets wechseln möchten', 'Hohe Effizienz', 'Passt zu Gebäuden mit großem Wärmebedarf'] },
-      { id: 'puffer', titel: 'Pufferspeicher HPS / HP 800–1000', kategorie: 'speicher', leistung: '800–1000 L', url: '/produkte/pufferspeicher-hps-hp', besondereEigenschaften: ['Optimiert den Betrieb von Kesseln und Wärmepumpen', 'Kann mit Solarwärmetauscher ausgestattet werden', 'Sorgt für gleichmäßige Wärmeabgabe'] },
-      { id: 'hygiene', titel: 'Hygienepufferspeicher PHS / PH 800–1000', kategorie: 'speicher', leistung: '800–1000 L', url: '/produkte/hygienepufferspeicher', besondereEigenschaften: ['Frischwassertechnik für hygienische Warmwasserbereitung', 'Gute Ergänzung für Biomasse- und Kombikessel', 'Erhöht den Komfort'] },
-      { id: 'saugsystem', titel: 'Kesselsaugsystem & 600-Liter-Standsilo', kategorie: 'zubehoer', leistung: '600 L', url: '/produkte/kesselsaugsystem-standsilo', besondereEigenschaften: ['Komfortable Pelletlagerung', 'Automatisierte Förderung', 'Platzsparendes Silokonzept'] }
+      { id: 'mia8', titel: 'NMT MIA 8 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '8 kW', url: 'https://shop.neue-heizung.com/products/nmt-mia-8-monoblock-inverter-luft-wasser-warmepumpe-inkl-warmwasserspeicher-trennspeicher', besondereEigenschaften: ['Sehr effizient für gut gedämmte Einfamilienhäuser', 'Inklusive Warmwasserspeicher und Trennspeicher', 'Leiser Betrieb, ideal für Wohngebiete'] },
+      { id: 'mia13', titel: 'NMT MIA 13 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '13 kW', url: 'https://shop.neue-heizung.com/products/nmt-mia-8-monoblock-inverter-luft-wasser-warmepumpe-inkl-warmwasserspeicher-trennspeicher-kopie', besondereEigenschaften: ['Für größere Einfamilien- und Zweifamilienhäuser', 'Hohe Jahresarbeitszahl durch Inverter-Technologie', 'Inklusive Warmwasserspeicher'] },
+      { id: 'mia18', titel: 'NMT MIA 18 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '18 kW', url: 'https://shop.neue-heizung.com/products/nmt-mia-18-inverter-monoblock-luft-wasser-warmepumpe-18-kw-inkl-300-l-warmwasserspeicher-800-l-trennspeicher', besondereEigenschaften: ['Für Mehrfamilienhäuser oder Gewerbe mit gutem Dämmstandard', 'Stabile Leistung auch bei niedrigen Außentemperaturen', 'Förderfähig und zukunftssicher'] },
+      { id: 'mia23', titel: 'NMT MIA 23 – Monoblock Inverter Luft/Wasser-Wärmepumpe', kategorie: 'waermepumpe', leistung: '23 kW', url: 'https://shop.neue-heizung.com/products/nmt-mia-23-inverter-monoblock-luft-wasser-warmepumpe-23-kw-inkl-300-l-warmwasserspeicher-1000-l-trennspeicher', besondereEigenschaften: ['Für große Gebäude oder Gewerbeeinheiten', 'Hohe Effizienz, vorbereitet für Lastmanagement', 'Inklusive Warmwasserspeicher'] },
+      { id: 'twwp200', titel: 'Trinkwasser-Wärmepumpe 200 Liter mit Wärmetauscher', kategorie: 'trinkwasser', leistung: '200 L', url: 'https://shop.neue-heizung.com/products/trinkwasser-warmepumpe-20-nbsp-liter', besondereEigenschaften: ['Effiziente Warmwasserbereitung', 'Ideal als Ergänzung zur Hauptheizung', 'Einfache Installation'] },
+      { id: 'twwp270', titel: 'Trinkwasser-Wärmepumpe 270 Liter mit Wärmetauscher', kategorie: 'trinkwasser', leistung: '270 L', url: 'https://shop.neue-heizung.com/products/trinkwasser-warmepumpe-270-liter-mit-warmetauscher', besondereEigenschaften: ['Für höheren Warmwasserbedarf', 'Nutzen von Umgebungsluftwärme', 'Geringe Betriebskosten'] },
+      { id: 'pkp15', titel: 'Pelletkessel PKP Smart 15 – vollautomatischer Pelletkessel', kategorie: 'pellets', leistung: '15 kW', url: 'https://shop.neue-heizung.com/products/pelletkessel-pkp-smart-15-vollautomatischer-pelletkessel-mit-lambda-32-kg-tagesbehalter', besondereEigenschaften: ['Automatische Beschickung', 'Effizient und komfortabel', 'Ideal für Einfamilienhäuser'] },
+      { id: 'pkpCompact', titel: 'Pelletkessel PKP-Kompakt 15–30 kW', kategorie: 'pellets', leistung: '15–30 kW', url: 'https://shop.neue-heizung.com/products/pelletkessel-pkp-kompakt-15-30-kw', besondereEigenschaften: ['Flexible Leistungsbereiche', 'Für mittlere bis größere Gebäude', 'Automatisches Saugsystem möglich'] },
+      { id: 'hvg2', titel: 'Scheitholzkessel HVG II 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', url: 'https://shop.neue-heizung.com/products/scheitholzkessel-hvg-ii-15-18-kw-mit-zubeh-rpaket-zugbegrenzer-kesselsicherheitsgruppe-kesselr-cklaufanhebung', besondereEigenschaften: ['Für Nutzer mit eigenem Holzvorrat', 'Hohe Wirkungsgrade', 'Robuste Konstruktion'] },
+      { id: 'hvg3', titel: 'Scheitholzkessel HVG III 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', url: 'https://shop.neue-heizung.com/products/scheitholzkessel-hvg-iii-15-18-kw-lambda-mit-zubehorpaket-zugbegrenzer-kesselsicherheitsgruppe-kesselrucklaufanhebung', besondereEigenschaften: ['Optimierte Verbrennung', 'Für mittelgroße Gebäude', 'Solider Dauerbetrieb'] },
+      { id: 'hvg4', titel: 'Scheitholzkessel HVG IV 15/30', kategorie: 'scheitholz', leistung: '15–30 kW', url: 'https://shop.neue-heizung.com/products/scheitholzkessel-xl-hvg-iv-15-18-kw-lambda-mit-zubehorpaket-zugbegrenzer-kesselsicherheitsgruppe-kesselrucklaufanhebung', besondereEigenschaften: ['Hohe Effizienz und Komfort', 'Optional mit Pufferspeicher kombinierbar', 'Ideal für größere Heizräume'] },
+      { id: 'hvgp4', titel: 'Kombikessel HVGP IV 15/30 (Scheitholz + Pellets)', kategorie: 'kombi', leistung: '15–30 kW', url: 'https://shop.neue-heizung.com/products/kombikessel-hvgp-iv-15-scheitholz-pellet-in-einem-system', besondereEigenschaften: ['Flexibilität zwischen Pellets und Scheitholz', 'Hohe Unabhängigkeit von Brennstoffpreisen', 'Automatischer Pelletbetrieb'] },
+      { id: 'hvgp', titel: 'Kombikessel HVG P15/P30 (Scheitholz + Pellets)', kategorie: 'kombi', leistung: '15–30 kW', url: 'https://shop.neue-heizung.com/products/hvg-p15-kombikessel-scheitholz-pellet-18-kw-moderne-hybrid-heizlosung', besondereEigenschaften: ['Für Nutzer, die zwischen Holz und Pellets wechseln möchten', 'Hohe Effizienz', 'Passt zu Gebäuden mit großem Wärmebedarf'] },
+      { id: 'puffer', titel: 'Pufferspeicher HPS / HP 800–1000', kategorie: 'speicher', leistung: '800–1000 L', url: 'https://shop.neue-heizung.com/products/pufferspeicher-hps-1000-1000-l-mit-3-2-m-solar-warmetauscher-100-mm-vliesisolierung', besondereEigenschaften: ['Optimiert den Betrieb von Kesseln und Wärmepumpen', 'Kann mit Solarwärmetauscher ausgestattet werden', 'Sorgt für gleichmäßige Wärmeabgabe'] },
+      { id: 'hygiene', titel: 'Hygienepufferspeicher PHS / PH 800–1000', kategorie: 'speicher', leistung: '800–1000 L', url: 'https://shop.neue-heizung.com/products/hygienepufferspeicher-phs-800-800-l-mit-7-5-m-edelstahl-wellrohr-3-2-m-solarwarmetauscher', besondereEigenschaften: ['Frischwassertechnik für hygienische Warmwasserbereitung', 'Gute Ergänzung für Biomasse- und Kombikessel', 'Erhöht den Komfort'] },
+      { id: 'saugsystem', titel: 'Kesselsaugsystem & 600-Liter-Standsilo', kategorie: 'zubehoer', leistung: '600 L', url: 'https://shop.neue-heizung.com/products/kesselsaugsystem-600-liter-standsilo-komplettpaket-fur-hvgp-hvgp-iv-pkp-kompakt', besondereEigenschaften: ['Komfortable Pelletlagerung', 'Automatisierte Förderung', 'Platzsparendes Silokonzept'] }
     ];
 
     // Fragenkonfiguration
@@ -765,7 +765,7 @@
                 <li>Hygienepufferspeicher PHS/PH 800–1000 für frisches Warmwasser</li>
                 <li>Kesselsaugsystem & 600-Liter-Standsilo für automatisierte Pelletförderung</li>
               </ul>
-              <button class="btn btn-primary" type="button">Zum Zubehör</button>
+              <a class="btn btn-primary" href="https://shop.neue-heizung.com/products/kesselsaugsystem-600-liter-standsilo-komplettpaket-fur-hvgp-hvgp-iv-pkp-kompakt">Zum Zubehör</a>
             </article>
           `;
         }
