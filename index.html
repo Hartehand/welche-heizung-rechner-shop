@@ -31,34 +31,35 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      font-size: 16.5px;
     }
 
     a { color: inherit; }
 
     header, main {
-      width: min(1100px, 95vw);
+      width: min(1200px, 97vw);
       margin: 0 auto;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      padding: 4rem 0 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      padding: 4.5rem 0 3.5rem;
       align-items: center;
     }
 
     .hero-text h1 {
-      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-size: clamp(2.2rem, 4.4vw, 3rem);
       margin: 0 0 1rem;
       color: var(--primary-dark);
       letter-spacing: -0.5px;
     }
 
     .hero-text p {
-      margin: 0 0 1.5rem;
+      margin: 0 0 1.75rem;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 1.08rem;
     }
 
     .hero-cta {
@@ -98,11 +99,11 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: clamp(1.5rem, 3vw, 2rem);
+      padding: clamp(1.75rem, 3vw, 2.35rem);
     }
 
     .wizard {
-      margin: 1.5rem 0 3rem;
+      margin: 1.75rem 0 3.25rem;
     }
 
     .wizard-header {
@@ -138,14 +139,14 @@
 
     .options {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin: 1rem 0 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.1rem;
+      margin: 1.2rem 0 1.35rem;
     }
 
     .option-card {
       position: relative;
-      padding: 1rem;
+      padding: 1.05rem 1.1rem;
       border: 1px solid var(--border);
       border-radius: var(--radius);
       background: #fff;
@@ -219,7 +220,7 @@
     }
 
     .results {
-      margin: 2rem 0 3rem;
+      margin: 2.25rem 0 3.5rem;
     }
 
     .results h2 {
@@ -235,8 +236,8 @@
 
     .recommendations {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.1rem;
     }
 
     .recommendation-card {
@@ -308,6 +309,79 @@
       font-size: 0.95rem;
     }
 
+    .loading {
+      display: none;
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 32px rgba(31, 75, 153, 0.18);
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .loading-bar {
+      position: relative;
+      flex: 1;
+      height: 10px;
+      background: #e6eaf3;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .loading-bar span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 999px;
+      animation: load 3s ease-in-out forwards;
+    }
+
+    @keyframes load {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    .info-section {
+      margin: 0 auto 3rem;
+      width: min(1200px, 97vw);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.1rem;
+    }
+
+    .info-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+      box-shadow: 0 12px 30px rgba(22, 53, 102, 0.1);
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .info-card strong {
+      color: var(--primary-dark);
+      font-size: 1.05rem;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
     @media (max-width: 640px) {
       .wizard-actions {
         flex-direction: column;
@@ -358,6 +432,14 @@
       </div>
     </section>
 
+    <div class="loading" id="loading" aria-live="polite" aria-busy="true">
+      <div style="display:flex;flex-direction:column;gap:0.25rem;min-width:220px;">
+        <strong>Wir berechnen Ihre perfekte Heizung …</strong>
+        <span style="color:var(--muted);font-size:0.95rem;">Bitte einen Moment Geduld.</span>
+      </div>
+      <div class="loading-bar" aria-hidden="true"><span></span></div>
+    </div>
+
     <section class="results panel" id="results" style="display:none;">
       <h2>Ihre passende Heizlösung</h2>
       <p class="lead">Basierend auf Ihren Angaben empfehlen wir folgende Systeme:</p>
@@ -365,6 +447,27 @@
       <div class="notice">Hinweis: Die Empfehlung bietet eine erste Orientierung. Eine individuelle Fachberatung durch die Neue Heizung GmbH stellt sicher, dass hydraulischer Abgleich, Förderfähigkeit und Aufstellbedingungen optimal berücksichtigt werden.</div>
       <div style="margin-top:1.5rem; text-align:right;">
         <a href="/kontakt" class="btn btn-primary">Individuelle Fachberatung anfragen</a>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="panel" style="text-align:left;">
+        <h2 style="margin-top:0;color:var(--primary-dark);">Mehr Gründe für die Neue Heizung GmbH</h2>
+        <p style="margin:0 0 1rem;color:var(--muted);max-width:760px;">Setzen Sie auf einen Partner, der nicht nur das passende Heizsystem empfiehlt, sondern Sie von der Planung bis zur Inbetriebnahme begleitet.</p>
+        <div class="info-grid">
+          <div class="info-card">
+            <strong>⭐ Fördermittel-Kompetenz</strong>
+            <p>Wir prüfen mögliche Zuschüsse und bereiten alle Unterlagen für Sie vor.</p>
+          </div>
+          <div class="info-card">
+            <strong>🔧 Montage aus einer Hand</strong>
+            <p>Eigene Fachmonteure kümmern sich um Hydraulik, Elektrik und Inbetriebnahme.</p>
+          </div>
+          <div class="info-card">
+            <strong>📈 Zukunftssichere Technik</strong>
+            <p>Moderne Regelungen, smart ready und auf Wunsch mit PV-Integration kombinierbar.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -478,10 +581,16 @@
     const nextBtn = document.getElementById('nextBtn');
     const resultsSection = document.getElementById('results');
     const recommendationsWrapper = document.getElementById('recommendations');
+    const loadingState = document.getElementById('loading');
 
     function resetResults() {
       resultsSection.style.display = 'none';
       recommendationsWrapper.innerHTML = '';
+      loadingState.style.display = 'none';
+      const bar = loadingState.querySelector('.loading-bar');
+      if (bar) {
+        bar.innerHTML = '<span></span>';
+      }
     }
 
     // Render question cards
@@ -710,9 +819,15 @@
     }
 
     function showResults() {
-      resultsSection.style.display = 'block';
-      generateRecommendations();
-      resultsSection.scrollIntoView({ behavior: 'smooth' });
+      resetResults();
+      loadingState.style.display = 'flex';
+
+      setTimeout(() => {
+        loadingState.style.display = 'none';
+        resultsSection.style.display = 'block';
+        generateRecommendations();
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+      }, 3000);
     }
 
     prevBtn.addEventListener('click', () => {
